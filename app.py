@@ -96,10 +96,11 @@ if 'modal_open' not in st.session_state:
     st.session_state.modal_open = False  # Control for modal state
 
 st.title("NextBinge")
+st.markdown("<h4 style='color: gray;'>Find Your Next Binge-Worthy Flick</h4>", unsafe_allow_html=True)
 movie_list = movies['title'].values
-option = st.selectbox("Type or select a movie from the dropdown", movie_list)
+option = st.selectbox("Type or select a movie", movie_list)
 
-if st.button('Show Recommendation'):
+if st.button('Generate Recommendations'):
     # Get recommendations and store them in session state
     st.session_state.recommendations = recommend(option)
 st.markdown("<hr>", unsafe_allow_html=True)
