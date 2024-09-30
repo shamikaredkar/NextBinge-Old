@@ -39,7 +39,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# Function to fetch poster, tagline, genres, and trailer URL
 def fetch_poster_and_trailer(movie_id):
     url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key=ec3d3f78a72c37231a2bd59e1bed0bb5&language=en-US"
     data = requests.get(url).json()
@@ -61,7 +60,6 @@ def fetch_poster_and_trailer(movie_id):
 
     return full_path, tagline, genres_str, trailer
 
-# Function to recommend movies
 def recommend(movie):
     index = movies[movies['title'] == movie].index[0]
     distances = sorted(list(enumerate(similarity[index])), reverse=True, key=lambda x: x[1])
@@ -82,18 +80,16 @@ def recommend(movie):
 
     return recommended_movie_names, recommended_movie_posters, recommended_movie_taglines, recommended_movie_genres, recommended_movie_trailers
 
-# Load movie data and similarity model
 movies_dict = pickle.load(open('movies_dict.pkl', 'rb'))
 movies = pd.DataFrame(movies_dict)
 similarity = pickle.load(open('similarity.pkl', 'rb'))
 
-# Initialize session state for recommendations and modal control
 if 'recommendations' not in st.session_state:
     st.session_state.recommendations = None
 if 'trailer_url' not in st.session_state:
     st.session_state.trailer_url = None
 if 'modal_open' not in st.session_state:
-    st.session_state.modal_open = False  # Control for modal state
+    st.session_state.modal_open = False  
 
 st.title("NextBinge")
 st.markdown("<h4 style='color: gray;'>Find Your Next Binge-Worthy Flick</h4>", unsafe_allow_html=True)
@@ -101,15 +97,12 @@ movie_list = movies['title'].values
 option = st.selectbox("Type or select a movie", movie_list)
 
 if st.button('Generate Recommendations'):
-    # Get recommendations and store them in session state
     st.session_state.recommendations = recommend(option)
 st.markdown("<hr>", unsafe_allow_html=True)
 
-# Display recommendations if available in session state
 if st.session_state.recommendations:
     recommended_movie_names, recommended_movie_posters, recommended_movie_taglines, recommended_movie_genres, recommended_movie_trailers = st.session_state.recommendations
     
-    # Display first row of 5 movies
     col1, col2, col3, col4, col5 = st.columns(5)
     for i, col in enumerate([col1, col2, col3, col4, col5]):
         with col:
@@ -128,7 +121,6 @@ if st.session_state.recommendations:
             
     st.markdown("<hr>", unsafe_allow_html=True)
 
-    # Display second row of 5 movies
     col6, col7, col8, col9, col10 = st.columns(5)
     for i, col in enumerate([col6, col7, col8, col9, col10], start=5):
         with col:
@@ -146,14 +138,12 @@ if st.session_state.recommendations:
             st.caption(f"Genres: {recommended_movie_genres[i]}")
             
 
-# Modal setup
 modal = Modal(key="TrailerModal", title="Movie Trailer")
 
-# Only open the modal if the button was clicked
 if st.session_state.modal_open:
     with modal.container():
         if st.session_state.trailer_url:
             st.video(st.session_state.trailer_url)
         if st.button("Close Trailer"):
-            st.session_state.modal_open = False  # Close the modal when button is clicked
-            st.rerun()  # Rerun the app to reflect the modal state change
+            st.session_state.modal_open = False  
+            st.rerun()  
