@@ -4,7 +4,6 @@ import pandas as pd
 import requests
 from streamlit_modal import Modal
 
-# Add combined custom CSS for hover effect and hiding modal "X" button
 st.markdown("""
     <style>
     /* Hover effect for movie posters */
@@ -14,13 +13,17 @@ st.markdown("""
     }
     .movie-title {
         position: absolute;
-        bottom: 10px;
-        left: 0;
-        width: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         text-align: center;
         color: white;
         background-color: rgba(0, 0, 0, 0.7);
-        padding: 5px;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         opacity: 0;
         transition: opacity 0.3s ease;
     }
@@ -30,14 +33,11 @@ st.markdown("""
     .movie-poster {
         width: 100%;
         height: auto;
-    }
-    
-    /* Hide modal close (X) button */
-    .modal-header button.close {
-        display: none !important;
+        display: block;
     }
     </style>
 """, unsafe_allow_html=True)
+
 
 # Function to fetch poster, tagline, genres, and trailer URL
 def fetch_poster_and_trailer(movie_id):
