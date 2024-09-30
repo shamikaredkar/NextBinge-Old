@@ -8,7 +8,7 @@ def recommend(movie):
     movies_list = sorted(list(enumerate(distances)), reverse=True, key=lambda x:x[1])[1:11]
     recommended_movies = []
     for i in movies_list:
-        recommended_movies.append(movies.iloc[i[0].title])
+        recommended_movies.append(movies.iloc[i[0]].title)
     return recommended_movies
 
 movies_dict = pickle.load(open('movies_dict.pkl', 'rb'))
@@ -20,6 +20,7 @@ st.title("NextBinge")
 option = st.selectbox('Select a movie',movies['title'].values)
 
 if st.button('Recommend'):
-    recommend(option)
-    st.write(option)
+    recommendations = recommend(option)
+    for i in recommendations:
+        st.write(i)
     
