@@ -1,5 +1,10 @@
 <div align="center"><h2>NextBinge - <a href="https://nextbinge.streamlit.app/">Demo</a></h2></div>
 
+
+
+https://github.com/user-attachments/assets/7ff5fbcd-c77b-46dd-90c8-c18a43ee719b
+
+
 ## Overview
 
 NextBinge is a personalized movie recommender system designed to suggest movies similar to the ones you've watched and liked. It leverages content-based filtering, recommending movies by analyzing genres, keywords, cast, and crew information. The system displays movie posters, taglines, genres, and even provides YouTube trailers. It is built using Streamlit for the frontend and leverages machine learning to compute movie similarities, providing a sleek user experience.
