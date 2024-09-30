@@ -102,6 +102,7 @@ option = st.selectbox("Type or select a movie from the dropdown", movie_list)
 if st.button('Show Recommendation'):
     # Get recommendations and store them in session state
     st.session_state.recommendations = recommend(option)
+st.markdown("<hr>", unsafe_allow_html=True)
 
 # Display recommendations if available in session state
 if st.session_state.recommendations:
@@ -111,6 +112,10 @@ if st.session_state.recommendations:
     col1, col2, col3, col4, col5 = st.columns(5)
     for i, col in enumerate([col1, col2, col3, col4, col5]):
         with col:
+            if recommended_movie_trailers[i]:
+                if st.button(f'Watch Trailer', key=f'trailer_button_{i}'):
+                    st.session_state.trailer_url = recommended_movie_trailers[i]
+                    st.session_state.modal_open = True  # Set modal state to open
             st.markdown(f"""
             <div class="movie-container">
                 <img class="movie-poster" src="{recommended_movie_posters[i]}" alt="{recommended_movie_names[i]}">
@@ -119,15 +124,17 @@ if st.session_state.recommendations:
             """, unsafe_allow_html=True)
             st.caption(recommended_movie_taglines[i])
             st.caption(f"Genres: {recommended_movie_genres[i]}")
-            if recommended_movie_trailers[i]:
-                if st.button(f'Watch Trailer', key=f'trailer_button_{i}'):
-                    st.session_state.trailer_url = recommended_movie_trailers[i]
-                    st.session_state.modal_open = True  # Set modal state to open
+            
+    st.markdown("<hr>", unsafe_allow_html=True)
 
     # Display second row of 5 movies
     col6, col7, col8, col9, col10 = st.columns(5)
     for i, col in enumerate([col6, col7, col8, col9, col10], start=5):
         with col:
+            if recommended_movie_trailers[i]:
+                if st.button(f'Watch Trailer', key=f'trailer_button_{i}'):
+                    st.session_state.trailer_url = recommended_movie_trailers[i]
+                    st.session_state.modal_open = True  # Set modal state to open
             st.markdown(f"""
             <div class="movie-container">
                 <img class="movie-poster" src="{recommended_movie_posters[i]}" alt="{recommended_movie_names[i]}">
@@ -136,10 +143,7 @@ if st.session_state.recommendations:
             """, unsafe_allow_html=True)
             st.caption(recommended_movie_taglines[i])
             st.caption(f"Genres: {recommended_movie_genres[i]}")
-            if recommended_movie_trailers[i]:
-                if st.button(f'Watch Trailer', key=f'trailer_button_{i}'):
-                    st.session_state.trailer_url = recommended_movie_trailers[i]
-                    st.session_state.modal_open = True  # Set modal state to open
+            
 
 # Modal setup
 modal = Modal(key="TrailerModal", title="Movie Trailer")
@@ -151,4 +155,4 @@ if st.session_state.modal_open:
             st.video(st.session_state.trailer_url)
         if st.button("Close Trailer"):
             st.session_state.modal_open = False  # Close the modal when button is clicked
-            st.experimental_rerun()  # Rerun the app to reflect the modal state change
+            st.rerun()  # Rerun the app to reflect the modal state change
