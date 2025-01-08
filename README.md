@@ -1,4 +1,4 @@
-<div align="center"><h2>NextBinge - <a href="https://nextbinge.streamlit.app/">Demo</a></h2></div>
+<div align="center"><h2>NextBinge - <a href="https://nextbingemovies.streamlit.app/">Demo</a></h2></div>
 
 
 
